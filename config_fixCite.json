@@ -1,0 +1,47 @@
+{
+    "version":1,
+    "disable_existing_loggers": true,
+    "formatters": {
+        "simple": {
+            "style":"{",
+            "format": "{levelname} {module} {message}"
+           }
+        },
+    "handlers": {
+        "null": {
+            "level":"DEBUG",
+            "class":"logging.NullHandler"
+            },
+        
+        "console":{
+            "level":"INFO",
+            "class":"logging.StreamHandler",
+            "formatter": "simple"
+            },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "fixCite_messages.log",
+            "mode":"w",
+            "formatter":"simple"
+            }
+        },
+    
+    "root":{
+        "handlers": ["console", "file"],
+        "level": "INFO"
+        },
+  "_comment": "this can be used as loggers after root in above, just remove _comment and keep loggers",
+    "loggers": {
+       "__main__": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": false
+            },
+       "test":{
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": true
+            }
+       }
+    }

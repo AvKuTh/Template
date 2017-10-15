@@ -1,0 +1,11 @@
+if [ -f *.pdf ] 
+then trash *.pdf
+fi
+pdflatex -output-directory=output/ $1.tex
+cd output
+filename=( echo $1 | cut -d'/' -f 2)
+echo $filename
+bibtex $filename.aux
+cd ..
+pdflatex -output-directory=output/ $1.tex
+mv output/*.pdf ./

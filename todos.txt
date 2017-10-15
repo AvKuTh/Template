@@ -1,0 +1,13 @@
+makepdf error notes through log grep etc
+
+Not necessary
+
+Make fixcite a full package and release
+Add warnings for cite keyword found in text but not matching
+Add report for normal cite keyword found in text
+
+NOTE: It seems position(severity) of debug and info are interchanged in loggers and handlers mode.
+
+
+
+

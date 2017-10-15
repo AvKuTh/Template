@@ -1,0 +1,42 @@
+\documentclass[12pt, journal, a4paper]{IEEEtran}
+
+\usepackage[backend=bibtex,style=numeric,citestyle=numeric-comp,url=true]{biblatex}
+\usepackage{csquotes}
+\usepackage{hyperref}
+\usepackage{abstract}
+
+
+\renewcommand{\abstracttextfont}{\normalfont\normalsize\bfseries}
+\renewcommand{\abstractnamefont}{\normalfont\normalsize\itshape}
+
+\hypersetup{colorlinks=true}
+
+\addbibresource{../input/ref.bib}
+
+\begin{document}
+
+\title{Sample Title}
+\author{Avishek~Thakur\\%
+Email: avikumarthakur@gmail.com
+}
+
+\twocolumn[
+  \begin{@twocolumnfalse}
+	\maketitle
+	\begin{abstract}
+	  \label{abstract}
+	  \input{input/files/abstract}
+    \end{abstract}
+    \tableofcontents
+  \end{@twocolumnfalse}
+  ]
+
+\clearpage
+
+\section{Introduction}
+\label{intro}
+\input{input/files/intro}
+
+\printbibliography
+	
+\end{document}
