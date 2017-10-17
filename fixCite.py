@@ -1,5 +1,5 @@
 '''
- In this program we will fix the citations to latex format! 
+In this program we will fix the citations to latex format! 
 
 First all the .tex files in the current directories (and sub-directories) are searched. They are copied into a backup folder that is provided to this program. The program reads every file from the backup folder and writes the modified lines into the corresponding original file. As the original file is opened in write mode, first all contents are deleted. If a line does not match our regular expression search for a pattern, then it is written in situ. If the regular expression matches then the line is modified to be latex compatible and written to the original file where the url link is replaced with a name. 
 
@@ -96,7 +96,6 @@ It gets the  command line arguments  through argparse package. The arguments mus
         ''' This is the main method that must be run after the state is initialized and basic checks are made. This method performs the actual task by calling the relevant methods.'''
         files = self.getFiles(False,backupFolder)
         self.swapFiles(files,backupFolder)
-        print (files)
         for file in files:
             self.logger.info('Setting up files structures in Backup folder for '+file)
             self.logger.info('Starting update cite process for' + file)                
@@ -163,8 +162,7 @@ It gets the  command line arguments  through argparse package. The arguments mus
                 # remove ./ from the beginning of files
                 if file[:2] == './':
                     file = file[2:]
-                # exclude files in backup folder
-                print(file)
+                # exclude files in backup folder                
                 if not excludeBackup or  not ( file[:len(backupFolder)+1] == backupFolder + '/'  or  file[:len(backupFolder)+1] == backupFolder + '\\'):                    
                     if self.type_match(file):
                         files_result.append(file)
@@ -299,7 +297,7 @@ It gets the  command line arguments  through argparse package. The arguments mus
             newline = self._key.subf(replaceString,line)
             changedLine = True            
         else :
-            newline = line[:-1]
+            newline = line
             changedLine=False
 
         return [newline,changedLine]
@@ -398,7 +396,7 @@ It gets the  command line arguments  through argparse package. The arguments mus
                 
     def generateNameFrmUrl(self,url):
         ''' This method generates a name for the given URL. It randomly selects some words from the URL and then for each word, randomly selects some letters, combinin gthem all to generate a name. It returns the name'''
-        nameSplits = regex.split('[. / \\ :]+',url)
+        nameSplits = regex.split('[^\w]+',url)
         chooseNum = int(len(nameSplits) * float(self._urlSelectFrac))
         if chooseNum < 1 : chooseNum = len(nameSplits)
         randomNames = random.sample(nameSplits,chooseNum)

@@ -1,11 +1,40 @@
 if [ -f *.pdf ] 
 then trash *.pdf
+echo;echo 'Deleted pdf from .'
 fi
-pdflatex -output-directory=output/ $1.tex
+echo;echo 'Running fixCite in CWD'
+$p fixCite.py input/ref.bib config_fixCite.json scratch
+echo 'fixCite has been run. If succesful, Back up is stored in scratch folder. Otherwise please check the log'
+#Below is the command to revert from backup - scratch to original and keep new backup in scratch2
+#$p fixCite.py input/ref.bib config_fixCite.json scratch -T scratch2
+echo;echo  'pdflatex start output in output/pdflatexlog1.log'
+(pdflatex -output-directory=output/ $1.tex ) > output/pdflatexlog1.log
+echo;echo 'pdflatex end';
 cd output
-filename=( echo $1 | cut -d'/' -f 2)
-echo $filename
-bibtex $filename.aux
+#echo $1
+filename=$(echo $1 | cut -d '/' -f 2)
+#echo $filename
+echo ;echo 'bibtex start output in output/bibtexlog.log'
+(bibtex $filename.aux  ) > bibtexlog.log
+echo;echo 'bibtex end'
 cd ..
-pdflatex -output-directory=output/ $1.tex
+echo; echo 'pdflatex start output in output/pdflatexlog2.log'
+(pdflatex -output-directory=output/ $1.tex ) > output/pdflatexlog2.log
+echo; echo 'pdflatex end';echo
 mv output/*.pdf ./
+#echo 'Displaying output from bibtex :';echo
+#cat output/bibtexlog.log
+#echo ; echo 'The output from bibtex log ends above'
+echo; echo 'The lines having the word "warning"  in output/bibtexlog.log (through grep):';echo
+grep -iE 'warning' output/bibtexlog.log
+echo; echo 'The lines having the word "error"  in output/bibtexlog.log (through grep):';echo
+grep -iE 'error' output/bibtexlog.log
+echo; echo 'The lines having the word "warning"  in output/pdflatexlog1.log (through grep):';echo
+grep -iE 'warning' output/pdflatexlog1.log
+echo; echo 'The lines having the word "error"  in output/pdflatexlog1.log (through grep):';echo
+grep -iE 'error' output/pdflatexlog1.log
+echo; echo 'The lines having the word "warning"  in output/pdflatexlog2.log (through grep):';echo
+grep -iE 'warning' output/pdflatexlog2.log
+echo; echo 'The lines having the word "error"  in output/pdflatexlog2.log (through grep):';echo
+grep -iE 'error' output/pdflatexlog2.log
+

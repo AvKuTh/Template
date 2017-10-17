@@ -14,14 +14,14 @@
             },
         
         "console":{
-            "level":"INFO",
+            "level":"ERROR",
             "class":"logging.StreamHandler",
             "formatter": "simple"
             },
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "fixCite_messages.log",
+            "filename": "log_fixCite.log",
             "mode":"w",
             "formatter":"simple"
             }
